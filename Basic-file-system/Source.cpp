@@ -3,6 +3,7 @@
 #include <string>
 #include <Windows.h>
 #include "gline.h"
+#include "menu.h"
 
 /*
 ==========
@@ -33,10 +34,8 @@ int main()
 
 			if (isUsernameValid(username, password))
 			{
-				//Start the normal operation of the program
-				std::cout << "Should start the normal operation of the program";
-				Sleep(1000);
-				return 0;
+				std::cout << "\nWelcome, " << username << "!\n\n";
+				mainMenu(username);
 			}
 			else
 			{
