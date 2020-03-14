@@ -99,15 +99,85 @@ void changeLocation(std::filesystem::path& currentLocation, std::string& input, 
 	else if (absolute)
 		nextLocation = input.substr(3, input.length() - 3);
 
-	if (canUserEnterLocation(nextLocation, username))
+	if (canUserEnterLocation(nextLocation, username) && std::filesystem::is_directory(nextLocation))
 		currentLocation = nextLocation;
+	else if (!std::filesystem::is_directory(nextLocation))
+		std::cout << "The path does not lead to a directory!\n\n";
 	else
 		std::cout << "You do not have permissions to enter the desired location!\n\n";
 }
 
+/*
+isPathCorrect
+
+path - path to check
+Given path returns 1 if the relative or the absolute path is correct and if the user has valid
+permissions to enter the location specified by path, otherwise returns 1
+*/
+bool isPathCorrect(const std::filesystem::path& path, const std::filesystem::path& currentLocation, const std::string& username)
+{
+	bool absolute = checkPathExists(path);
+	bool relative = checkPathExists(currentLocation / path);
+	if (!absolute && !relative)
+	{
+		std::cout << "\nThe specified path does not exist!\n\n";
+		return 0;
+	}
+
+	std::filesystem::path currentPath = path;
+	if (relative)
+		currentPath = currentLocation / currentPath;
+	else if (absolute)
+		currentPath = currentPath;
+	if (!canUserEnterLocation(currentPath, username))
+	{
+		std::cout << "You do not have permissions to enter the desired location!\n\n";
+		return 0;
+	}
+
+	return 1;
+}
+
+std::string getEndDirectory(const std::filesystem::path& path)
+{
+	std::string path_string = path.u8string();
+	std::string ans = "";
+	for (int j = path_string.length() - 1; j >= 0 && path_string[j] != '\\'; --j)
+		ans += path_string[j];
+	std::reverse(ans.begin(), ans.end());
+
+	return ans;
+}
+
 void listDirectories(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
 {
+	std::filesystem::path pathPrint;
+	if (input == "list" || input == "list ")
+		pathPrint = currentLocation;
+	else
+	{
+		input = input.substr(5, input.length() - 5);
+		pathPrint = input;
 
+		if (!isPathCorrect(pathPrint, currentLocation, username))
+			return;
+		
+		if (checkPathExists(currentLocation / pathPrint))
+			pathPrint = currentLocation / pathPrint;
+		else if (checkPathExists(pathPrint))
+			pathPrint = pathPrint;
+	}
+
+	std::cout << "\n";
+	for (auto i = std::filesystem::recursive_directory_iterator(pathPrint);
+		i != std::filesystem::recursive_directory_iterator();
+		++i)
+	{
+		std::cout << std::string(i.depth(), '\t') << 
+			"\"" << getEndDirectory((*i).path()) << "\"" << "\n";
+	}
+
+	std::cout << "\n";
 }
 
 /*
@@ -146,25 +216,7 @@ bool isCreatePathAndCommandCorrect(const std::filesystem::path& currentLocation,
 	newDataLocation = input;
 	newDataLocation = newDataLocation.parent_path();
 
-	bool absolute = checkPathExists(newDataLocation);
-	bool relative = checkPathExists(currentLocation / newDataLocation);
-	if (!absolute && !relative)
-	{
-		std::cout << "\nThe specified path does not exist!\n\n";
-		return 0;
-	}
-
-	if (relative)
-		newDataLocation = currentLocation / newDataLocation;
-	else if (absolute)
-		newDataLocation = newDataLocation;
-	if (!canUserEnterLocation(newDataLocation, username))
-	{
-		std::cout << "You do not have permissions to enter the desired location!\n\n";
-		return 0;
-	}
-
-	return 1;
+	return isPathCorrect(newDataLocation, currentLocation, username);
 }
 
 std::filesystem::path setLocationToInput(const std::filesystem::path& currentLocation, const std::string& input)
@@ -193,16 +245,17 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 		return;
 
 	//This takes the last part of the user path that specifies the name of the directory/file to be created
-	std::string fileName = "";
-	for (int j = input.length() - 1; j >= 0 && input[j] != '\\'; --j)
-		fileName += input[j];
-	std::reverse(fileName.begin(), fileName.end());
+	std::string fileName = getEndDirectory(input);
+//	for (int j = input.length() - 1; j >= 0 && input[j] != '\\'; --j)
+//		fileName += input[j];
+//	std::reverse(fileName.begin(), fileName.end());
 
 	std::filesystem::path newDataLocation = setLocationToInput(currentLocation, input);
 	
 	bool isDirectoryCreated = false;
 	try
 	{
+		std::cout << "Place: " << newDataLocation / fileName << "\n";
 		if (!isDirectoryFile)
 		{
 			std::ofstream stream(newDataLocation / fileName);
@@ -214,7 +267,8 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 	}
 	catch (const std::exception& ex)
 	{
-		std::cout << "There was an unexpected error creating a document!\n\n";
+		std::cout << ex.what() << "\n";
+		std::cout << "EXCThere was an unexpected error creating a document!\n\n";
 		return;
 	}
 
@@ -223,7 +277,7 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 	else if (isDirectoryCreated && !isDirectoryFile)
 		std::cout << "The file is created!\n\n";
 	else if (!isDirectoryCreated)
-		std::cout << "There was an unexpected error creating a document!\n\n";
+		std::cout << "NOTCREATEDThere was an unexpected error creating a document!\n\n";
 }
 
 
@@ -254,7 +308,7 @@ void mainMenu(const std::string& username)
 		{
 			createDirectory(currentLocation, input, username);
 		}
-		else if (input.substr(0, 5) == "list ")
+		else if (input.substr(0, 4) == "list")
 		{
 			listDirectories(currentLocation, input, username);
 		}
