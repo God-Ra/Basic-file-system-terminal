@@ -28,7 +28,7 @@ void getLine(std::string& line, const int MAX_LENGTH, const std::string& startin
 			std::cout << startingLine;
 			std::cout << line;
 		}
-		else if (c != ASCII_ENTER && line.length() < MAX_LENGTH)
+		else if (c != ASCII_ENTER && (int)line.length() < MAX_LENGTH)
 		{
 			line += c;
 			std::cout << c;
@@ -67,7 +67,7 @@ void getLineAsterisks(std::string& line, const int MAX_LENGTH, const std::string
 			std::cout << startingLine;
 			std::cout << std::string(line.length(), '*');
 		}
-		else if (c != ASCII_ENTER && line.length() < MAX_LENGTH)
+		else if (c != ASCII_ENTER && (int)line.length() < MAX_LENGTH)
 		{
 			line += c;
 			std::cout << "*";
