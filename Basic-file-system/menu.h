@@ -37,6 +37,8 @@ SIDE EFFECT: It strips input from the command parts, so only the part specifying
 */
 bool isCreatePathAndCommandCorrect(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
+std::filesystem::path setLocationToInput(const std::filesystem::path & currentLocation, const std::string & input);
+
 void createDirectory(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
 void mainMenu(const std::string& username);
