@@ -161,11 +161,29 @@ void listDirectories(const std::filesystem::path& currentLocation, std::string& 
 
 		if (!isPathCorrect(pathPrint, currentLocation, username))
 			return;
-		
 		if (checkPathExists(currentLocation / pathPrint))
-			pathPrint = currentLocation / pathPrint;
+		{
+			if (std::filesystem::is_directory(currentLocation / pathPrint))
+			{
+				pathPrint = currentLocation / pathPrint;
+			}
+			else
+			{
+				std::cout << "The path is not a directory!\n\n";
+				return;
+			}
+		}
 		else if (checkPathExists(pathPrint))
-			pathPrint = pathPrint;
+		{
+			//Check if the path is directory, if it's not you don't have something to iterate on
+			if (std::filesystem::is_directory(pathPrint))
+				pathPrint = pathPrint;
+			else
+			{
+				std::cout << "The path is not a directory!\n\n";
+				return;
+			}
+		}
 	}
 
 	std::cout << "\n";
@@ -267,8 +285,7 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 	}
 	catch (const std::exception& ex)
 	{
-		std::cout << ex.what() << "\n";
-		std::cout << "EXCThere was an unexpected error creating a document!\n\n";
+		std::cout << "There was an unexpected error creating a document!\n\n";
 		return;
 	}
 
@@ -277,7 +294,7 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 	else if (isDirectoryCreated && !isDirectoryFile)
 		std::cout << "The file is created!\n\n";
 	else if (!isDirectoryCreated)
-		std::cout << "NOTCREATEDThere was an unexpected error creating a document!\n\n";
+		std::cout << "There was an unexpected error creating a document!\n\n";
 }
 
 
