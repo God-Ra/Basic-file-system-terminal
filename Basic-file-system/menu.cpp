@@ -297,6 +297,61 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 		std::cout << "There was an unexpected error creating a document!\n\n";
 }
 
+void printDataFromTextFile(const std::filesystem::path& pathPrint)
+{
+	std::ifstream fin(pathPrint);
+
+	if (fin.is_open())
+	{
+		std::string line;
+		while (std::getline(fin, line))
+			std::cout << line << "\n";
+
+		fin.close();
+	}
+	else
+		std::cout << "Unable to open the text file!\n\n";
+}
+
+void printText(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
+{
+	if (input == "print" || input == "print ")
+	{
+		std::cout << "The path is missing!\n\n";
+		return;
+	}
+	input = input.substr(6, input.length() - 6);
+	std::filesystem::path pathPrint = input;
+
+	if (!isPathCorrect(input, currentLocation, username))
+		return;
+	if (checkPathExists(currentLocation / pathPrint))
+	{
+		if ((currentLocation / pathPrint).extension().string() == ".txt")
+		{
+			pathPrint = currentLocation / pathPrint;
+		}
+		else
+		{
+			std::cout << "The path does not represent a text file!\n\n";
+			return;
+		}
+	}
+	else if (checkPathExists(pathPrint))
+	{
+		//Check if the path is a text file, if it is then we can read data from it
+		if (pathPrint.extension().string() == ".txt")
+			pathPrint = pathPrint;
+		else
+		{
+			std::cout << "The path does not represent a text file!\n\n";
+			return;
+		}
+	}
+
+	printDataFromTextFile(pathPrint);
+	std::cout << "\n\n";
+}
 
 void mainMenu(const std::string& username)
 {
@@ -328,6 +383,10 @@ void mainMenu(const std::string& username)
 		else if (input.substr(0, 4) == "list")
 		{
 			listDirectories(currentLocation, input, username);
+		}
+		else if (input.substr(0, 5) == "print")
+		{
+			printText(currentLocation, input, username);
 		}
 	}
 }

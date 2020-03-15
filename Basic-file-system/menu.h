@@ -41,4 +41,8 @@ std::filesystem::path setLocationToInput(const std::filesystem::path & currentLo
 
 void createDirectory(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
+void printDataFromTextFile(const std::filesystem::path & pathPrint);
+
+void printText(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
+
 void mainMenu(const std::string& username);
