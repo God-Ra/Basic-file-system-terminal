@@ -21,6 +21,13 @@ bool checkPathExists(const std::filesystem::path& path)
 	try
 	{
 		res = std::filesystem::exists(path);
+
+		//The if part is made to combat the paths which have only empty characters or only dots
+		//with empty characters, the system would return that there exists such path when it does not
+		//so I just try to iterate over that path that should be a directory and if I get an exception
+		//the path does not exist
+		if (std::filesystem::is_directory(path))
+			auto i = std::filesystem::recursive_directory_iterator(path);
 	}
 	catch (...)
 	{
@@ -356,6 +363,168 @@ void printText(const std::filesystem::path& currentLocation, std::string& input,
 	std::cout << "\n\n";
 }
 
+//The input should guarantee that the first 4 letters of input are "find"
+//[TESTED]
+bool isFindFormatGood(const std::string& input)
+{
+	std::string str = input;
+
+	if (str == "find" || str == "find ")
+	{
+		std::cout << "The arguments for the command \"find\" are missing!\n\n";
+		return 0;
+	}
+	else if (str[4] != ' ')
+	{
+		return 0;
+	}
+	else if (str.length() < 6)
+		return 0;
+
+	str = str.substr(5, str.length() - 5);
+	if (str[0] != '"')
+	{
+		std::cout << "The command is incorrectly written!\n\n";
+		return 0;
+	}
+
+	int j = 1;
+	for (; j < str.length() && str[j] != '"'; ++j);
+	if (j == str.length())
+	{
+		std::cout << "The command is incorrectly written!\n\n";
+		return 0;
+	}
+
+	//Found the second ", new string str = "...
+	str = str.substr(j, str.length() - j);
+	if (str.length() == 1 || str.length() == 2 || str[1] != ' ')
+	{
+		std::cout << "The command is incorrectly written!\n\n";
+		return 0;
+	}
+	str = str.substr(2, str.length() - 2);
+
+	//It is not a problem if the path consists only of empty characters
+	return 1;
+}
+
+/*
+parseFindFunction
+
+Gets a valid input in the form of a find function, returns the string in "" through text and the
+path through dataLocation
+[TESTED]
+*/
+void parseFindFunction(const std::string& input, std::string& text, std::string& dataLocationText)
+{
+	text = "";
+	dataLocationText = "";
+	int j = 0;
+	for (; input[j] != '"'; ++j);
+	++j;
+	for (; input[j] != '"'; ++j)
+		text += input[j];
+	j += 2;
+
+	for (; j < (int)input.length(); ++j)
+		dataLocationText += input[j];
+	return;
+}
+
+/*
+findTextInTextDocument
+
+dataLocation - location of a text file where the text is searched
+text - the text that is searched
+returns -1 if the text is not found, otherwise returns the line on which the text is found
+[TESTED]
+*/
+int findTextInTextDocument(const std::string& text, const std::filesystem::path& dataLocation)
+{
+	std::ifstream fin(dataLocation);
+	int isFound = -1;
+	int textLength = text.length();
+
+	if (fin.is_open())
+	{
+		std::string line;
+		int lineCounter = 1;
+
+		while (std::getline(fin, line))
+		{
+			int lineLength = (int)line.length();
+			for (int j = 0; j < lineLength && lineLength - j >= textLength && isFound == -1; ++j)
+			{
+				if (line.substr(j, textLength) == text)
+					isFound = lineCounter;
+			}
+
+			++lineCounter;
+		}
+
+		fin.close();
+	}
+	else
+	{
+		std::cout << "Unable to open the text file!\n\n";
+	}
+
+	return isFound;
+}
+
+void findText(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
+{
+	std::string text;
+	std::string dataLocationText;
+	std::filesystem::path dataLocation;
+	
+	//The function isFindFormatGood checks only whether the input is parsable with respect to the find function
+	if (!isFindFormatGood(input))
+		return;
+
+	parseFindFunction(input, text, dataLocationText);
+	dataLocation = dataLocationText;
+
+	if (!isPathCorrect(dataLocation, currentLocation, username))
+		return;
+	if (checkPathExists(currentLocation / dataLocation))
+	{
+		if ((currentLocation / dataLocation).extension().string() == ".txt")
+		{
+			dataLocation = currentLocation / dataLocation;
+		}
+		else
+		{
+			std::cout << "The path does not represent a text file!\n\n";
+			return;
+		}
+	}
+	else if (checkPathExists(dataLocation))
+	{
+		//Check if the path is a text file, if it is then we can read data from it
+		if (dataLocation.extension().string() == ".txt")
+			dataLocation = dataLocation;
+		else
+		{
+			std::cout << "The path does not represent a text file!\n\n";
+			return;
+		}
+	}
+
+	if (text.length() == 0)
+	{
+		std::cout << "The text that you are searching is empty!\n\n";
+		return;
+	}
+
+	int lineOnWhichTextIsFound = findTextInTextDocument(text, dataLocation);
+	if (lineOnWhichTextIsFound != -1)
+		std::cout << "The text is found on line: " << lineOnWhichTextIsFound << "\n\n";
+	else
+		std::cout << "The given text is not found!\n\n";
+}
+
 void mainMenu(const std::string& username)
 {
 	std::string input;
@@ -390,6 +559,10 @@ void mainMenu(const std::string& username)
 		else if (input.substr(0, 5) == "print")
 		{
 			printText(currentLocation, input, username);
+		}
+		else if (input.substr(0, 4) == "find")
+		{
+			findText(currentLocation, input, username);
 		}
 	}
 }

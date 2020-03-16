@@ -45,4 +45,10 @@ void printDataFromTextFile(const std::filesystem::path & pathPrint);
 
 void printText(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
+bool isFindFormatGood(const std::string & input);
+
+void parseFindFunction(const std::string & input, std::string & text, std::string& dataLocationText);
+
+void findText(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
+
 void mainMenu(const std::string& username);
