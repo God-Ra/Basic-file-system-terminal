@@ -51,4 +51,6 @@ void parseFindFunction(const std::string & input, std::string & text, std::strin
 
 void findText(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
+void findFile(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
+
 void mainMenu(const std::string& username);

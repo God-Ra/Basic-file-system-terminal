@@ -389,7 +389,7 @@ bool isFindFormatGood(const std::string& input)
 	}
 
 	int j = 1;
-	for (; j < str.length() && str[j] != '"'; ++j);
+	for (; j < (int)str.length() && str[j] != '"'; ++j);
 	if (j == str.length())
 	{
 		std::cout << "The command is incorrectly written!\n\n";
@@ -525,15 +525,117 @@ void findText(const std::filesystem::path& currentLocation, std::string& input, 
 		std::cout << "The given text is not found!\n\n";
 }
 
+//The input should guarantee that the first 7 letters of input are "findDat"
+bool isFindFileFormatGood(const std::string& input)
+{
+	std::string str = input;
+
+	if (str == "findDat" || str == "findDat ")
+	{
+		std::cout << "The arguments for the command \"findDat\" are missing!\n\n";
+		return 0;
+	}
+	else if (str[7] != ' ')
+	{
+		return 0;
+	}
+
+	int cnt = 0;
+	bool isCurrentCharacterSpace = true;
+	for (int j = 7; j < (int)input.length(); ++j)
+	{
+		if (input[j] != ' ' && isCurrentCharacterSpace)
+		{
+			++cnt;
+			isCurrentCharacterSpace = false;
+		}
+		else if (input[j] == ' ' && !isCurrentCharacterSpace)
+		{
+			++cnt;
+			isCurrentCharacterSpace = true;
+		}
+	}
+
+	if (cnt < 3)
+	{
+		std::cout << "The arguments are incorrectly written\n\n";
+		return 0;
+	}
+
+	return 1;
+}
+
+/*
+parseFindFileFunction
+
+input is the text being parsed, fileName is where the name of the file gets stored
+path is where the path gets stored
+fileName and path will be overwritten
+*/
+void parseFindFileFunction(const std::string& input, std::string& fileName, std::string& path)
+{
+	fileName = "";
+	path = "";
+	int j = 7;
+	while (input[j] == ' ') ++j;
+
+	while (input[j] != ' ')
+	{
+		fileName += input[j];
+		++j;
+	}
+	while (input[j] == ' ') ++j;
+
+	while (j < (int)input.length())
+	{
+		path += input[j];
+		++j;
+	}
+
+	return;
+}
+
+void findFile(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
+{
+	if (!isFindFileFormatGood(input))
+		return;
+
+	std::string fileName, pathText;
+	parseFindFileFunction(input, fileName, pathText);
+
+	std::filesystem::path path = pathText;
+
+	if (!isPathCorrect(path, currentLocation, username))
+		return;
+	if (checkPathExists(currentLocation / path))
+	{
+		path = currentLocation / path;
+	}
+	else if (checkPathExists(path))
+	{
+		path = path;
+	}
+
+	std::cout << "Searching for \"" << fileName << "\" in subdirectory \"" << pathText << "\"\n";
+	std::cout << "Found: \n";
+
+	for (auto i = std::filesystem::recursive_directory_iterator(path);
+		i != std::filesystem::recursive_directory_iterator();
+		++i)
+	{
+		if (getEndDirectory((*i).path()) == fileName)
+			std::cout << (*i).path() << "\n";
+	}
+
+	std::cout << "\n\n";
+}
+
 void mainMenu(const std::string& username)
 {
 	std::string input;
 	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
 
-	/*for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(currentLocation))
-		std::cout << dirEntry.path() << "\n";
-	std::filesystem::create_directory(currentLocation / "directory");*/
-	pathExistsTests();
+//	pathExistsTests();
 
 	while (1)
 	{
@@ -560,9 +662,17 @@ void mainMenu(const std::string& username)
 		{
 			printText(currentLocation, input, username);
 		}
-		else if (input.substr(0, 4) == "find")
+		else if (input.substr(0, 5) == "find ")
 		{
 			findText(currentLocation, input, username);
 		}
+		else if (input.substr(0, 7) == "findDat")
+		{
+			findFile(currentLocation, input, username);
+		}
+		else if (input == "logout")
+			return;
+		else
+			std::cout << "The command is not recognizable!\n\n";
 	}
 }
