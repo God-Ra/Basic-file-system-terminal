@@ -51,6 +51,10 @@ void parseFindFunction(const std::string & input, std::string & text, std::strin
 
 void findText(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
+bool isFindFileFormatGood(const std::string & input);
+
+void parseFindFileFunction(const std::string & input, std::string & fileName, std::string & path);
+
 void findFile(const std::filesystem::path & currentLocation, std::string & input, const std::string & username);
 
 void mainMenu(const std::string& username);

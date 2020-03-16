@@ -526,6 +526,7 @@ void findText(const std::filesystem::path& currentLocation, std::string& input, 
 }
 
 //The input should guarantee that the first 7 letters of input are "findDat"
+//[TESTED]
 bool isFindFileFormatGood(const std::string& input)
 {
 	std::string str = input;
@@ -571,6 +572,7 @@ parseFindFileFunction
 input is the text being parsed, fileName is where the name of the file gets stored
 path is where the path gets stored
 fileName and path will be overwritten
+[TESTED]
 */
 void parseFindFileFunction(const std::string& input, std::string& fileName, std::string& path)
 {
@@ -595,6 +597,7 @@ void parseFindFileFunction(const std::string& input, std::string& fileName, std:
 	return;
 }
 
+//[TESTED]
 void findFile(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
 {
 	if (!isFindFileFormatGood(input))
