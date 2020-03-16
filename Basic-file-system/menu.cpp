@@ -320,6 +320,9 @@ void printText(const std::filesystem::path& currentLocation, std::string& input,
 		std::cout << "The path is missing!\n\n";
 		return;
 	}
+	else if (input.substr(0, 5) == "print" && input[5] != ' ')
+		return;
+
 	input = input.substr(6, input.length() - 6);
 	std::filesystem::path pathPrint = input;
 
