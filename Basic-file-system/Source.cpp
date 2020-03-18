@@ -42,6 +42,10 @@ int main()
 				std::cout << "\nUsername or password are invalid!\n\n";
 			}
 		}
+		else
+		{
+			std::cout << "You are not logged in! To login use command \"login\"\n\n";
+		}
 	}
 }
 
