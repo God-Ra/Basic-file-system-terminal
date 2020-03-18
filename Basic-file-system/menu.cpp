@@ -1,6 +1,6 @@
 #include "menu.h"
 
-void giveLocation(const std::filesystem::path& currentLocation)
+void printLocation(const std::filesystem::path& currentLocation)
 {
 	std::cout << "\nYour current location: " << currentLocation << "\n\n";
 }
@@ -11,7 +11,7 @@ bool checkPathExists(const std::filesystem::path& path)
 
 	for (char c : path_string)
 	{
-		//With this check there should be no exceptions that occurred in one of the tests
+		//Banned symbols for naming in windows
 		if (c == '<' || c == '>' || c == '"' || c == '|' || c == '?' || c == '*')
 			return 0;
 	}
@@ -182,7 +182,7 @@ void listDirectories(const std::filesystem::path& currentLocation, std::string& 
 		}
 		else if (checkPathExists(pathPrint))
 		{
-			//Check if the path is directory, if it's not you don't have something to iterate on
+			//Check if the path is directory, if it's not you don't have a path to iterate on
 			if (std::filesystem::is_directory(pathPrint))
 				pathPrint = pathPrint;
 			else
@@ -224,7 +224,7 @@ bool isCreatePathAndCommandCorrect(const std::filesystem::path& currentLocation,
 	std::filesystem::path newDataLocation;
 	if (input.substr(0, 3) == "-d ")
 	{
-		if (input.length() <= 3)
+		if (input.length() == 3)
 		{
 			std::cout << "The command is invalid!\n\n";
 			return 0;
@@ -271,16 +271,12 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 
 	//This takes the last part of the user path that specifies the name of the directory/file to be created
 	std::string fileName = getEndDirectory(input);
-//	for (int j = input.length() - 1; j >= 0 && input[j] != '\\'; --j)
-//		fileName += input[j];
-//	std::reverse(fileName.begin(), fileName.end());
 
 	std::filesystem::path newDataLocation = setLocationToInput(currentLocation, input);
 	
 	bool isDirectoryCreated = false;
 	try
 	{
-		std::cout << "Place: " << newDataLocation / fileName << "\n";
 		if (!isDirectoryFile)
 		{
 			std::ofstream stream(newDataLocation / fileName);
@@ -297,11 +293,17 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 	}
 
 	if (isDirectoryCreated && isDirectoryFile)
+	{
+		std::cout << "PATH: " << newDataLocation / fileName << "\n";
 		std::cout << "The directory is created!\n\n";
+	}
 	else if (isDirectoryCreated && !isDirectoryFile)
+	{
+		std::cout << "PATH: " << newDataLocation / fileName << "\n";
 		std::cout << "The file is created!\n\n";
+	}
 	else if (!isDirectoryCreated)
-		std::cout << "There was an unexpected error creating a document!\n\n";
+		std::cout << "There was an unexpected error creating the document!\n\n";
 }
 
 void printDataFromTextFile(const std::filesystem::path& pathPrint)
@@ -322,13 +324,11 @@ void printDataFromTextFile(const std::filesystem::path& pathPrint)
 
 void printText(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
 {
-	if (input == "print" || input == "print ")
+	if (input == "print ")
 	{
 		std::cout << "The path is missing!\n\n";
 		return;
 	}
-	else if (input.substr(0, 5) == "print" && input[5] != ' ')
-		return;
 
 	input = input.substr(6, input.length() - 6);
 	std::filesystem::path pathPrint = input;
@@ -514,7 +514,7 @@ void findText(const std::filesystem::path& currentLocation, std::string& input, 
 
 	if (text.length() == 0)
 	{
-		std::cout << "The text that you are searching is empty!\n\n";
+		std::cout << "The text that you are searching for is empty!\n\n";
 		return;
 	}
 
@@ -618,6 +618,11 @@ void findFile(const std::filesystem::path& currentLocation, std::string& input, 
 	{
 		path = path;
 	}
+	if (!std::filesystem::is_directory(path))
+	{
+		std::cout << "The path does not represent a directory!\n\n";
+		return;
+	}
 
 	std::cout << "Searching for \"" << fileName << "\" in subdirectory \"" << pathText << "\"\n";
 	std::cout << "Found: \n";
@@ -647,31 +652,73 @@ void mainMenu(const std::string& username)
 
 		if (input == "where")
 		{
-			giveLocation(currentLocation);
+			printLocation(currentLocation);
 		}
-		else if (input.substr(0, 3) == "go ")
+		else if (input == "go" || input.substr(0, 3) == "go ")
 		{
-			changeLocation(currentLocation, input, username);
+			if (input != "go")
+				changeLocation(currentLocation, input, username);
+			else
+			{
+				std::cout << "Changes the current location of the user\n\ngo [PATH]\n\nPATH can be relative or absolute\n\n";
+			}
 		}
-		else if (input.substr(0, 7) == "create ")
+		else if (input == "create" || input.substr(0, 7) == "create ")
 		{
-			createDirectory(currentLocation, input, username);
+			if (input != "create")
+				createDirectory(currentLocation, input, username);
+			else
+			{
+				std::cout << "Creates a file or a document\n\n"
+					<< "create [-d] [PATH]\n\n"
+					<< "-d specifies that you want to create a directory\n"
+					<< "PATH can be relative or absolute path\n"
+					<< "PATH\\.. must exist, the folder in which the file/directory is created must exist\n\n";
+			}
 		}
 		else if (input.substr(0, 4) == "list")
 		{
 			listDirectories(currentLocation, input, username);
 		}
-		else if (input.substr(0, 5) == "print")
+		else if (input == "print" || input.substr(0, 6) == "print ")
 		{
-			printText(currentLocation, input, username);
+			if (input != "print")
+				printText(currentLocation, input, username);
+			else
+			{
+				std::cout << "Prints data from a text document\n\n"
+					<< "print PATH\n\n"
+					<< "PATH can be relative or absolute path\n"
+					<< "PATH must lead to a .txt document\n\n"
+					;
+			}
 		}
-		else if (input.substr(0, 5) == "find ")
+		else if (input == "find" || input.substr(0, 5) == "find ")
 		{
-			findText(currentLocation, input, username);
+			if (input != "find")
+				findText(currentLocation, input, username);
+			else
+			{
+				std::cout << "Prints the line of the first occurrence of the text in a .txt document\n\n"
+					<< "find \"text\" PATH\n\n"
+					<< "PATH can be relative or absolute path\n"
+					<< "PATH must lead to a .txt document\n"
+					<< "text must have at least one character\n\n"
+					;
+			}
 		}
-		else if (input.substr(0, 7) == "findDat")
+		else if (input == "findDat" || input.substr(0, 7) == "findDat")
 		{
-			findFile(currentLocation, input, username);
+			if (input != "findDat")
+				findFile(currentLocation, input, username);
+			else
+			{
+				std::cout << "Searches for all occurrences of a file in a directory\n\n"
+					<< "findDat FILENAME PATH\n\n"
+					<< "PATH can be relative or absolute path\n"
+					<< "PATH must lead to a directory\n\n"
+					;
+			}
 		}
 		else if (input == "logout")
 			return;

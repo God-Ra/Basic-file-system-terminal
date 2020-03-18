@@ -8,7 +8,7 @@
 #include "tests.h"
 #include "constants.h"
 
-void giveLocation(const std::filesystem::path& currentLocation);
+void printLocation(const std::filesystem::path& currentLocation);
 
 bool checkPathExists(const std::filesystem::path& path);
 
