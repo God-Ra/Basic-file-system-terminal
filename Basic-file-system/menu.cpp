@@ -643,8 +643,6 @@ void mainMenu(const std::string& username)
 	std::string input;
 	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
 
-//	pathExistsTests();
-
 	while (1)
 	{
 		std::cout << username << ">>";
