@@ -631,7 +631,7 @@ void findFile(const std::filesystem::path& currentLocation, std::string& input, 
 		i != std::filesystem::recursive_directory_iterator();
 		++i)
 	{
-		if (getEndDirectory((*i).path()) == fileName)
+		if (getEndDirectory((*i).path()) == fileName && !std::filesystem::is_directory((*i).path()))
 			std::cout << (*i).path() << "\n";
 	}
 
