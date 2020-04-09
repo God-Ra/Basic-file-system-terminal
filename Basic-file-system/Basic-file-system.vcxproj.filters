@@ -27,10 +27,16 @@
     <ClCompile Include="tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="commands\Command.cpp">
+    <ClCompile Include="commands\where_command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="commands\WhereCommand.cpp">
+    <ClCompile Include="commands\helper_functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commands\abstract_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="commands\command_creator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +53,16 @@
     <ClInclude Include="tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="commands\Command.h">
+    <ClInclude Include="commands\abstract_command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="commands\WhereCommand.h">
+    <ClInclude Include="commands\helper_functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commands\where_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commands\command_creator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

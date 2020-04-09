@@ -2,7 +2,7 @@
 
 #include <filesystem>
 
-class Command
+class AbstractCommand
 {
 public:
 	virtual void execute(std::filesystem::path&) = 0;
