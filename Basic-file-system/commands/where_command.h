@@ -10,8 +10,7 @@
 enum class Status
 {
 	READY,
-	TOO_MANY_ARGUMENTS,
-	COMMAND_NAME_FAILURE
+	TOO_MANY_ARGUMENTS
 };
 
 class WhereCommand : public AbstractCommand
@@ -27,6 +26,6 @@ private:
 	Status status;
 
 	void setCommandStatus();
-
+	
 	void printCurrentLocation(const std::filesystem::path&);
 };

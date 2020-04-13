@@ -643,7 +643,7 @@ void mainMenu(const std::string& username)
 	std::string input;
 	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
 
-	while (1)
+	/*while (1)
 	{
 		std::cout << username << ">>";
 		std::getline(std::cin, input);
@@ -722,5 +722,22 @@ void mainMenu(const std::string& username)
 			return;
 		else
 			std::cout << "The command is not recognizable!\n\n";
+	}*/
+
+	while (1)
+	{
+		std::cout << username << ">>";
+		std::getline(std::cin, input);
+
+		std::cout << "\n";
+
+		AbstractCommand *command = createCommand(input);
+
+		if (command != nullptr)
+			command->execute(currentLocation);
+		
+		std::cout << "\n";
+
+		delete command;
 	}
 }

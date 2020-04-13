@@ -3,25 +3,32 @@
 WhereCommand::WhereCommand(const std::vector<std::string>& argumentList)
 {
 	this->argumentList = argumentList;
-	setCommandStatus();
 }
 
 void WhereCommand::execute(std::filesystem::path &currentLocation)
 {
-	printCurrentLocation(currentLocation);
+	setCommandStatus();
+
+	switch (status)
+	{
+	case Status::READY:
+		printCurrentLocation(currentLocation);
+		break;
+	case Status::TOO_MANY_ARGUMENTS:
+		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: There are too many arguments\n";
+		break;
+	}
 }
 
 void WhereCommand::setCommandStatus()
 {
-	//This shouldn't happen
-	if (argumentList[0] != COMMAND_NAME)
-		status = Status::COMMAND_NAME_FAILURE;
-
 	if (argumentList.size() > 1)
 		status = Status::TOO_MANY_ARGUMENTS;
+	else
+		status = Status::READY;
 }
 
 void WhereCommand::printCurrentLocation(const std::filesystem::path &currentLocation)
 {
-	std::cout << "\nYour current location: " << currentLocation << "\n\n";
+	std::cout << "Your current location: " << currentLocation << "\n";
 }

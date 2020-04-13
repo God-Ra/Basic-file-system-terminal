@@ -3,9 +3,24 @@
 AbstractCommand* createCommand(std::string &inputString)
 {
 	std::vector<std::string> argumentList;
-	splitStringIntoWords(argumentList, inputString);
+	try
+	{
+		parseInputLine(argumentList, inputString);
+	}
+	catch (const std::exception &ex)
+	{
+		std::cout << "ERROR: Each start of quotation marks should have an ending\n";
+		return nullptr;
+	}
+
+	if (argumentList.size() == 0)
+		return nullptr;
+
 	if (argumentList[0] == "where")
 		return new WhereCommand(argumentList);
+	else
+	{
+		std::cout << "ERROR: The command \"" << argumentList[0] << "\" is not found\n";
+		return nullptr;
+	}
 }
-
-//THINK ABOUT IF YOU WANT TO GIVE THE FILESYSTEM PATH WHILE CREATING THE OBJECT IMMEDIATELY

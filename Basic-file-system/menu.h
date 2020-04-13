@@ -7,6 +7,8 @@
 #include <vector>
 #include "tests.h"
 #include "constants.h"
+#include "commands\abstract_command.h"
+#include "commands\command_creator.h"
 
 void printLocation(const std::filesystem::path& currentLocation);
 
