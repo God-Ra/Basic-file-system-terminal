@@ -8,19 +8,17 @@
 #include <vector>
 #include <string>
 
-class WhereCommand : public AbstractCommand
+class GoCommand : public AbstractCommand
 {
 public:
-	WhereCommand(const std::vector<std::string>& argumentList);
+	GoCommand(const std::vector<std::string>& argumentList);
 
 	virtual void execute(std::filesystem::path&);
 private:
-	const std::string COMMAND_NAME = "where";
+	const std::string COMMAND_NAME = "go";
 	std::vector<std::string> argumentList;
 
 	Status status;
 
 	void setCommandStatus();
-	
-	void printCurrentLocation(const std::filesystem::path&);
 };
