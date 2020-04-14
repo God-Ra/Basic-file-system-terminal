@@ -20,6 +20,8 @@ AbstractCommand* createCommand(std::string &inputString)
 		return new WhereCommand(argumentList);
 	else if (argumentList[0] == "go")
 		return new GoCommand(argumentList);
+	else if (argumentList[0] == "create")
+		return new CreateCommand(argumentList);
 	else
 	{
 		std::cout << "ERROR: The command \"" << argumentList[0] << "\" is not found\n";

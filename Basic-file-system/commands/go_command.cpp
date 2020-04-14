@@ -24,7 +24,7 @@ void GoCommand::execute(std::filesystem::path& currentLocation, const std::strin
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: The specified directory is not found!\n";
 		break;
 	case Status::TOO_FEW_ARGUMENTS:
-		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: There are too few arguments!\n";
+		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: There are not enough arguments!\n";
 		break;
 	}
 }

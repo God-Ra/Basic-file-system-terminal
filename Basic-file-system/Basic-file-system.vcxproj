@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="commands\abstract_command.cpp" />
     <ClCompile Include="commands\command_creator.cpp" />
+    <ClCompile Include="commands\create_command.cpp" />
     <ClCompile Include="commands\go_command.cpp" />
     <ClCompile Include="commands\helper_functions.cpp" />
     <ClCompile Include="commands\where_command.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="commands\abstract_command.h" />
     <ClInclude Include="commands\command_creator.h" />
+    <ClInclude Include="commands\create_command.h" />
     <ClInclude Include="commands\enums.h" />
     <ClInclude Include="commands\go_command.h" />
     <ClInclude Include="commands\helper_functions.h" />
