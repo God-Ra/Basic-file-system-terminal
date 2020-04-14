@@ -5,5 +5,7 @@
 class AbstractCommand
 {
 public:
-	virtual void execute(std::filesystem::path&) = 0;
+	virtual void execute(std::filesystem::path&, const std::string&) = 0;
+
+	virtual ~AbstractCommand() {}
 };

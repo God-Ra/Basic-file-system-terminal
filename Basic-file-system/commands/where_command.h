@@ -13,7 +13,7 @@ class WhereCommand : public AbstractCommand
 public:
 	WhereCommand(const std::vector<std::string>& argumentList);
 
-	virtual void execute(std::filesystem::path&);
+	virtual void execute(std::filesystem::path&, const std::string&);
 private:
 	const std::string COMMAND_NAME = "where";
 	std::vector<std::string> argumentList;
@@ -23,4 +23,6 @@ private:
 	void setCommandStatus();
 	
 	void printCurrentLocation(const std::filesystem::path&);
+
+	virtual ~WhereCommand() {}
 };

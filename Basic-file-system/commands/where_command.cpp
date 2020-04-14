@@ -5,7 +5,7 @@ WhereCommand::WhereCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void WhereCommand::execute(std::filesystem::path &currentLocation)
+void WhereCommand::execute(std::filesystem::path &currentLocation, const std::string& username)
 {
 	setCommandStatus();
 

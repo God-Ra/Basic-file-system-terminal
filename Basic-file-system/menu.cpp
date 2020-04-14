@@ -60,7 +60,7 @@ bool canUserEnterLocation(const std::filesystem::path& path, const std::string& 
 	return 1;
 }
 
-void changeSlashes(std::string& input)
+void changeSlashesMenu(std::string& input)
 {
 	for (char& c : input)
 	{
@@ -96,7 +96,7 @@ void changeLocation(std::filesystem::path& currentLocation, std::string& input, 
 	}
 
 	//This is done in case the input uses / for directories
-	changeSlashes(input);
+	changeSlashesMenu(input);
 
 	std::filesystem::path nextLocation;
 	if (input == "go ..")
@@ -260,7 +260,7 @@ std::filesystem::path setLocationToInput(const std::filesystem::path& currentLoc
 
 void createDirectory(const std::filesystem::path& currentLocation, std::string& input, const std::string& username)
 {
-	changeSlashes(input);
+	changeSlashesMenu(input);
 
 	//1-isDirectory; 0-isFile
 	bool isDirectoryFile = false;
@@ -729,12 +729,10 @@ void mainMenu(const std::string& username)
 		std::cout << username << ">>";
 		std::getline(std::cin, input);
 
-		std::cout << "\n";
-
 		AbstractCommand *command = createCommand(input);
 
 		if (command != nullptr)
-			command->execute(currentLocation);
+			command->execute(currentLocation, username);
 		
 		std::cout << "\n";
 

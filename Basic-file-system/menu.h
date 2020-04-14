@@ -24,7 +24,7 @@ Returns 1 if the user has permission to enter the location, 0 otherwise
 */
 bool canUserEnterLocation(const std::filesystem::path& path, const std::string& username);
 
-void changeSlashes(std::string& input);
+void changeSlashesMenu(std::string& input);
 
 void changeLocation(std::filesystem::path& currentLocation, std::string& input, const std::string& username);
 
