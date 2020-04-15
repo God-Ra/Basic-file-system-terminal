@@ -4,6 +4,7 @@
 #include "where_command.h"
 #include "go_command.h"
 #include "create_command.h"
+#include "list_command.h"
 
 #include <vector>
 #include <string>

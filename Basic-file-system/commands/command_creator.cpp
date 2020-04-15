@@ -22,6 +22,8 @@ AbstractCommand* createCommand(std::string &inputString)
 		return new GoCommand(argumentList);
 	else if (argumentList[0] == "create")
 		return new CreateCommand(argumentList);
+	else if (argumentList[0] == "list")
+		return new ListCommand(argumentList);
 	else
 	{
 		std::cout << "ERROR: The command \"" << argumentList[0] << "\" is not found\n";
