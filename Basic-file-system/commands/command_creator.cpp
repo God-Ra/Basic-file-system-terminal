@@ -28,6 +28,8 @@ AbstractCommand* createCommand(std::string &inputString)
 		return new PrintCommand(argumentList);
 	else if (argumentList[0] == "find")
 		return new FindCommand(argumentList);
+	else if (argumentList[0] == "cls")
+		return new ClsCommand(argumentList);
 	else
 	{
 		std::cout << "ERROR: The command \"" << argumentList[0] << "\" is not found\n";

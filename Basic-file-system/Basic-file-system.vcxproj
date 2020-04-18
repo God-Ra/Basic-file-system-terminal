@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="commands\abstract_command.cpp" />
+    <ClCompile Include="commands\cls_command.cpp" />
     <ClCompile Include="commands\command_creator.cpp" />
     <ClCompile Include="commands\create_command.cpp" />
     <ClCompile Include="commands\find_command.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commands\abstract_command.h" />
+    <ClInclude Include="commands\cls_command.h" />
     <ClInclude Include="commands\command_creator.h" />
     <ClInclude Include="commands\create_command.h" />
     <ClInclude Include="commands\enums.h" />

@@ -7,6 +7,8 @@
 #include "list_command.h"
 #include "print_command.h"
 #include "find_command.h"
+//reserved for finddat
+#include "cls_command.h"
 
 #include <vector>
 #include <string>
