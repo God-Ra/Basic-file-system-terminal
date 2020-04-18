@@ -6,6 +6,7 @@
 #include "create_command.h"
 #include "list_command.h"
 #include "print_command.h"
+#include "find_command.h"
 
 #include <vector>
 #include <string>

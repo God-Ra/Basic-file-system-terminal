@@ -51,6 +51,9 @@
     <ClCompile Include="commands\print_command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="commands\find_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gline.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="commands\print_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commands\find_command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
