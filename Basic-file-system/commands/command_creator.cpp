@@ -7,7 +7,7 @@ AbstractCommand* createCommand(std::string &inputString)
 	{
 		parseInputLine(argumentList, inputString);
 	}
-	catch (const std::exception &ex)
+	catch (const std::exception&)
 	{
 		std::cout << "ERROR: Each start of quotation marks should have an ending\n";
 		return nullptr;
@@ -28,6 +28,8 @@ AbstractCommand* createCommand(std::string &inputString)
 		return new PrintCommand(argumentList);
 	else if (argumentList[0] == "find")
 		return new FindCommand(argumentList);
+	else if (argumentList[0] == "findDat")
+		return new FindDatCommand(argumentList);
 	else if (argumentList[0] == "cls")
 		return new ClsCommand(argumentList);
 	else

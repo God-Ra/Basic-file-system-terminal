@@ -88,7 +88,7 @@ void CreateCommand::createFile()
 		else
 			isCreationSuccessful = std::filesystem::create_directory(creationDirectory / fileName);
 	}
-	catch (const std::exception& ex)
+	catch (const std::exception&)
 	{
 		status = Status::CREATION_FAILED;
 		return;

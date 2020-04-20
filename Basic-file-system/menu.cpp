@@ -286,7 +286,7 @@ void createDirectory(const std::filesystem::path& currentLocation, std::string& 
 		else
 			isDirectoryCreated = std::filesystem::create_directory(newDataLocation / fileName);
 	}
-	catch (const std::exception& ex)
+	catch (const std::exception&)
 	{
 		std::cout << "There was an unexpected error creating a document!\n\n";
 		return;

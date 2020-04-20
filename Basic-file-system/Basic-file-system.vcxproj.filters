@@ -57,6 +57,9 @@
     <ClCompile Include="commands\cls_command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="commands\finddat_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gline.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="commands\cls_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="commands\finddat_command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
