@@ -32,6 +32,8 @@ AbstractCommand* createCommand(std::string &inputString)
 		return new FindDatCommand(argumentList);
 	else if (argumentList[0] == "cls")
 		return new ClsCommand(argumentList);
+	else if (argumentList[0] == "logout")
+		return new LogoutCommand(argumentList);
 	else
 	{
 		std::cout << "ERROR: The command \"" << argumentList[0] << "\" is not found\n";

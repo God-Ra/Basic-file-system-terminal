@@ -9,6 +9,7 @@
 #include "find_command.h"
 #include "finddat_command.h"
 #include "cls_command.h"
+#include "logout_command.h"
 
 #include <vector>
 #include <string>
