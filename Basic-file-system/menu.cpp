@@ -730,12 +730,16 @@ void mainMenu(const std::string& username)
 		std::getline(std::cin, input);
 
 		AbstractCommand *command = createCommand(input);
+		int returnFromMain = 0;
 
 		if (command != nullptr)
-			command->execute(currentLocation, username);
+			returnFromMain = command->execute(currentLocation, username);
 		
 		std::cout << "\n";
 
 		delete command;
+
+		if (returnFromMain)
+			return;
 	}
 }

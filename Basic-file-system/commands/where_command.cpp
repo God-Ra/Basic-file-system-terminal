@@ -5,7 +5,7 @@ WhereCommand::WhereCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void WhereCommand::execute(std::filesystem::path &currentLocation, const std::string& username)
+int WhereCommand::execute(std::filesystem::path &currentLocation, const std::string& username)
 {
 	setCommandStatus();
 
@@ -18,6 +18,8 @@ void WhereCommand::execute(std::filesystem::path &currentLocation, const std::st
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: There are too many arguments\n";
 		break;
 	}
+
+	return 0;
 }
 
 void WhereCommand::setCommandStatus()

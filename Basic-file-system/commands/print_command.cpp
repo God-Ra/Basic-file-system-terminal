@@ -5,7 +5,7 @@ PrintCommand::PrintCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void PrintCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
+int PrintCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
 {
 	setCommandStatus(currentLocation, username);
 
@@ -32,6 +32,8 @@ void PrintCommand::execute(std::filesystem::path& currentLocation, const std::st
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: The specified file is not a text file\n";
 		break;
 	}
+
+	return 0;
 }
 
 void PrintCommand::setCommandStatus(std::filesystem::path& currentLocation, const std::string& username)

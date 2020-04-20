@@ -5,7 +5,7 @@ FindDatCommand::FindDatCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void FindDatCommand::execute(std::filesystem::path& currentLocation, const std::string &username)
+int FindDatCommand::execute(std::filesystem::path& currentLocation, const std::string &username)
 {
 	setCommandStatus(currentLocation, username);
 
@@ -28,6 +28,8 @@ void FindDatCommand::execute(std::filesystem::path& currentLocation, const std::
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: The specified directory is not found!\n";
 		break;
 	}
+
+	return 0;
 }
 
 void FindDatCommand::setCommandStatus(std::filesystem::path& currentLocation, const std::string& username)

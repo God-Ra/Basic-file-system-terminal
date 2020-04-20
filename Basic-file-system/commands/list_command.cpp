@@ -6,7 +6,7 @@ ListCommand::ListCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void ListCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
+int ListCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
 {
 	setCommandStatus(currentLocation, username);
 
@@ -28,6 +28,8 @@ void ListCommand::execute(std::filesystem::path& currentLocation, const std::str
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: The specified directory is not found!\n";
 		break;
 	}
+
+	return 0;
 }
 
 void ListCommand::setCommandStatus(std::filesystem::path& currentLocation, const std::string& username)

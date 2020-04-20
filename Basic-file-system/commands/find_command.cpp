@@ -5,7 +5,7 @@ FindCommand::FindCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void FindCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
+int FindCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
 {
 	setCommandStatus(currentLocation, username);
 
@@ -33,6 +33,8 @@ void FindCommand::execute(std::filesystem::path& currentLocation, const std::str
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: The specified file is a directory!\n";
 		break;
 	}
+
+	return 0;
 }
 
 void FindCommand::printSuccessMessage()

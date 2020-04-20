@@ -5,7 +5,7 @@ GoCommand::GoCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void GoCommand::execute(std::filesystem::path& currentLocation, const std::string& currentUsername)
+int GoCommand::execute(std::filesystem::path& currentLocation, const std::string& currentUsername)
 {
 	setCommandStatus(currentLocation, currentUsername);
 
@@ -27,6 +27,8 @@ void GoCommand::execute(std::filesystem::path& currentLocation, const std::strin
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: There are not enough arguments!\n";
 		break;
 	}
+
+	return 0;
 }
 
 void GoCommand::setCommandStatus(std::filesystem::path& currentLocation, const std::string& currentUsername)

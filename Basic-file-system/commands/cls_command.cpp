@@ -5,7 +5,7 @@ ClsCommand::ClsCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void ClsCommand::execute(std::filesystem::path& currentLocation, const std::string &username)
+int ClsCommand::execute(std::filesystem::path& currentLocation, const std::string &username)
 {
 	setCommandStatus(currentLocation, username);
 
@@ -18,6 +18,8 @@ void ClsCommand::execute(std::filesystem::path& currentLocation, const std::stri
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: There are too many arguments\n";
 		break;
 	}
+
+	return 0;
 }
 
 void ClsCommand::setCommandStatus(std::filesystem::path& currentLocation, const std::string &username)

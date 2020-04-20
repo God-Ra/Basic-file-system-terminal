@@ -5,7 +5,7 @@ CreateCommand::CreateCommand(const std::vector<std::string>& argumentList)
 	this->argumentList = argumentList;
 }
 
-void CreateCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
+int CreateCommand::execute(std::filesystem::path& currentLocation, const std::string& username)
 {
 	setCommandStatus(currentLocation, username);
 
@@ -33,6 +33,8 @@ void CreateCommand::execute(std::filesystem::path& currentLocation, const std::s
 		std::cout << "Command: \"" << COMMAND_NAME << "\", ERROR: Document/Directory creation failed!\n";
 		break;
 	}
+
+	return 0;
 }
 
 void CreateCommand::setCommandStatus(std::filesystem::path& currentLocation, const std::string& username)
