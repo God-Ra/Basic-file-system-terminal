@@ -70,8 +70,12 @@ void ListCommand::printDirectoryTree()
 		i != std::filesystem::recursive_directory_iterator();
 		++i)
 	{
-		std::cout << std::string(i.depth(), '\t') <<
-			"\"" << extractFileName((*i).path()) << "\"" << "\n";
+		std::cout << std::string(i.depth(), '\t');
+		if (std::filesystem::is_directory(((*i).path())))
+			std::cout << "<" << extractFileName((*i).path()) << ">";
+		else
+			std::cout << extractFileName((*i).path());
+		std::cout << "\n";
 	}
 }
 
@@ -80,7 +84,7 @@ std::string ListCommand::extractFileName(const std::filesystem::path& fullPath)
 {
 	std::string path_string = fullPath.u8string();
 	std::string ans = "";
-	for (int j = path_string.length() - 1; j >= 0 && path_string[j] != '\\'; --j)
+	for (int j = (int)path_string.length() - 1; j >= 0 && path_string[j] != '\\'; --j)
 		ans += path_string[j];
 	std::reverse(ans.begin(), ans.end());
 
