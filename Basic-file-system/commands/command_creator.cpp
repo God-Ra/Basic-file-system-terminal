@@ -9,34 +9,36 @@ AbstractCommand* createCommand(std::string &inputString)
 	}
 	catch (const std::exception&)
 	{
-		std::cout << "ERROR: Each start of quotation marks should have an ending\n";
+		std::cout << "ERROR: Every start of quotation marks should have an end\n";
 		return nullptr;
 	}
 
 	if (argumentList.size() == 0)
 		return nullptr;
 
-	if (argumentList[0] == "where")
+	std::string commandName = argumentList[0];
+
+	if (commandName == "where")
 		return new WhereCommand(argumentList);
-	else if (argumentList[0] == "go")
+	else if (commandName == "go")
 		return new GoCommand(argumentList);
-	else if (argumentList[0] == "create")
+	else if (commandName == "create")
 		return new CreateCommand(argumentList);
-	else if (argumentList[0] == "list")
+	else if (commandName == "list")
 		return new ListCommand(argumentList);
-	else if (argumentList[0] == "print")
+	else if (commandName == "print")
 		return new PrintCommand(argumentList);
-	else if (argumentList[0] == "find")
+	else if (commandName == "find")
 		return new FindCommand(argumentList);
-	else if (argumentList[0] == "findDat")
+	else if (commandName == "findDat")
 		return new FindDatCommand(argumentList);
-	else if (argumentList[0] == "cls")
+	else if (commandName == "cls")
 		return new ClsCommand(argumentList);
-	else if (argumentList[0] == "logout")
+	else if (commandName == "logout")
 		return new LogoutCommand(argumentList);
 	else
 	{
-		std::cout << "ERROR: The command \"" << argumentList[0] << "\" is not found\n";
+		std::cout << "ERROR: The command \"" << commandName << "\" is not found\n";
 		return nullptr;
 	}
 }

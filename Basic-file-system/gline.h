@@ -6,12 +6,12 @@
 
 /*
 ==============
-getLine (TESTED)
+getLine
 
-startingLine - The string that will be output before taking the input
-MAX_LENGTH - The maximum length of the line taking the input, takes into account the length of startingLine
-line - The function returns the input through this string, the reason the output is returned via
-a parameter is to not create a copy when returning a std::string directly
+startingLine - The string preceding input in the console
+MAX_LENGTH - The maximum length of the input
+line - The function result is returned using this string, the reason the output is returned over a reference
+is performance improvement over plainly returning and copying std::string
 ==============
 */
 void getLine(std::string& line, const int MAX_LENGTH, const std::string& startingLine);
@@ -20,12 +20,12 @@ void getLine(std::string& line, const int MAX_LENGTH, const std::string& startin
 ==============
 getLineAsterisks
 
-The function outputs an asterisk for each character in the input
+For each input character an asterisk is printed
 
-startingLine - The string that will be output before taking the input
-MAX_LENGTH - The maximum length of the line taking the input, takes into account the length of startingLine
-line - The function returns the input through this string, the reason the output is returned via
-a parameter is to not create a copy when returning a std::string directly
+startingLine - The string preceding input in the console
+MAX_LENGTH - The maximum length of the input
+line - The function result is returned using this string, the reason the output is returned over a reference
+is performance improvement over plainly returning and copying std::string
 ==============
 */
 void getLineAsterisks(std::string& line, const int MAX_LENGTH, const std::string& startingLine);

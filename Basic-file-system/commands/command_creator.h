@@ -14,5 +14,5 @@
 #include <vector>
 #include <string>
 
-//returns nullptr if the command name is not valid
+//returns nullptr if the command name is not valid, otherwise returns appropriate object
 AbstractCommand* createCommand(std::string&);

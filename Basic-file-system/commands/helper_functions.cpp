@@ -23,33 +23,33 @@ void parseInputLine(std::vector<std::string>& wordList, const std::string& input
 {
 	wordList.clear();
 	std::string currentWord = "";
-	bool quotationMarkHappened = false;
+	bool quotationMarkOccurred = false;
 
 	for (char c : inputString)
 	{
 		if (c == '\"')
 		{
-			if (quotationMarkHappened)
+			if (quotationMarkOccurred)
 			{
 				if (currentWord.length() != 0)
 					wordList.push_back(currentWord);
 				currentWord = "";
-				quotationMarkHappened = false;
+				quotationMarkOccurred = false;
 			}
 			else
-				quotationMarkHappened = true;
+				quotationMarkOccurred = true;
 		}
-		else if (c == ' ' && !quotationMarkHappened)
+		else if (c == ' ' && !quotationMarkOccurred)
 		{
 			if (currentWord.length() != 0)
 				wordList.push_back(currentWord);
 			currentWord = "";
 		}
-		else if ((c == ' ' && quotationMarkHappened) || (c != ' '))
+		else if ((c == ' ' && quotationMarkOccurred) || (c != ' '))
 			currentWord += c;
 	}
 
-	if (quotationMarkHappened) throw std::exception("The quotation mark is not closed");
+	if (quotationMarkOccurred) throw std::exception("The quotation mark is not closed");
 
 	if (currentWord.length() != 0)
 		wordList.push_back(currentWord);

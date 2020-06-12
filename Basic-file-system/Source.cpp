@@ -9,10 +9,8 @@
 ==========
 isUsernameValid
 
-The function checks whether pair of (username, password) exist in folder "users.txt"
-returns 1 if the pair exists, returns 0 otherwise
-The function does not check whether the file "users.txt" is correctly written, takes it as a given
-If the file does not exist the function still works
+The function returns true if a pair (username, password) exists in 
+file "users.txt", returns false otherwise
 ==========
 */
 bool isUsernameValid(const std::string& username, const std::string& password);
@@ -20,7 +18,8 @@ bool isUsernameValid(const std::string& username, const std::string& password);
 int main()
 {
 	std::string username;
-	while (1)
+	bool running = true;
+	while (running)
 	{
 		std::cout << ">>";
 		std::string input;
@@ -29,8 +28,8 @@ int main()
 		if (input == "login")
 		{
 			std::string password;
-			getLine(username, 31, "Username: ");
-			getLineAsterisks(password, 31, "Password: ");
+			getLine(username, USERNAME_LENGTH, "Username: ");
+			getLineAsterisks(password, PASSWORD_LENGTH, "Password: ");
 
 			if (isUsernameValid(username, password))
 			{
@@ -42,9 +41,13 @@ int main()
 				std::cout << "\nUsername or password are invalid!\n\n";
 			}
 		}
+		else if (input == "exit")
+		{
+			running = false;
+		}
 		else
 		{
-			std::cout << "You are not logged in! To login use command \"login\"\n\n";
+			std::cout << "You are not logged in! Use command \"login\"\n\n";
 		}
 	}
 }
@@ -53,6 +56,12 @@ bool isUsernameValid(const std::string& username, const std::string& password)
 {
 	std::ifstream fileUsers;
 	fileUsers.open("users.txt", std::ios::in);
+
+	if (!fileUsers.is_open())
+	{
+		std::cout << "The file where users are stored could not be opened!";
+		return false;
+	}
 
 	bool isUserFound = false;
 	std::string fileUsername = "", filePassword = "";

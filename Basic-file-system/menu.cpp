@@ -2,9 +2,6 @@
 
 void mainMenu(const std::string& username)
 {
-	std::string input;
-	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
-
 	/*while (1)
 	{
 		std::cout << username << ">>";
@@ -85,6 +82,9 @@ void mainMenu(const std::string& username)
 		else
 			std::cout << "The command is not recognizable!\n\n";
 	}*/
+
+	std::string input;
+	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
 
 	while (1)
 	{

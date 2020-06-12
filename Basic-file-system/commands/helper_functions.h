@@ -9,7 +9,7 @@
 void splitStringIntoWords(std::vector<std::string>&, std::string);
 
 //Throws std::exception if there is not an even number of quotation marks
-//Overwrites any data in the string
+//Overwrites any data in vector of strings
 void parseInputLine(std::vector<std::string>&, const std::string&) noexcept(false); 
 
 //Changes slashes from right pointing to left pointing
