@@ -1,24 +1,5 @@
 #include "helper_functions.h"
 
-void splitStringIntoWords(std::vector<std::string>& wordList, std::string inputString)
-{
-	std::string currentWord = "";
-	for (char c : inputString)
-	{
-		if (c == ' ')
-		{
-			if (currentWord.length() != 0)
-				wordList.push_back(currentWord);
-			currentWord = "";
-		}
-		else
-			currentWord += c;
-	}
-
-	if (currentWord.length() != 0)
-		wordList.push_back(currentWord);
-}
-
 void parseInputLine(std::vector<std::string>& wordList, const std::string& inputString)
 {
 	wordList.clear();
@@ -75,16 +56,11 @@ bool pathToDirectoryExists(const std::filesystem::path& path)
 			return 0;
 	}
 
-	//This is made to prevent exceptions
 	bool res;
 	try
 	{
 		res = std::filesystem::exists(path);
 
-		//The if part is made to combat the paths which have only empty characters or only dots
-		//with empty characters, the system would return that there exists such path when it does not
-		//so I just try to iterate over that path that should be a directory and if I get an exception
-		//the path does not exist
 		if (std::filesystem::is_directory(path))
 			auto i = std::filesystem::recursive_directory_iterator(path);
 	}
@@ -115,10 +91,6 @@ bool pathToFileExists(const std::filesystem::path& path)
 	{
 		res = std::filesystem::exists(path);
 
-		//The if part is made to combat the paths which have only empty characters or only dots
-		//with empty characters, the system would return that there exists such path when it does not
-		//so I just try to iterate over that path that should be a directory and if I get an exception
-		//the path does not exist
 		if (std::filesystem::is_directory(path))
 			auto i = std::filesystem::recursive_directory_iterator(path);
 	}

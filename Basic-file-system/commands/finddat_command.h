@@ -8,7 +8,6 @@
 #include <vector>
 #include <string>
 
-//OVA KOMANDA DRUGACIJA NEGO KAKO PISE U PROJEKTNOM
 class FindDatCommand : public AbstractCommand
 {
 public:

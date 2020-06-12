@@ -38,7 +38,7 @@ int main()
 			}
 			else
 			{
-				std::cout << "\nUsername or password are invalid!\n\n";
+				std::cout << "\nUsername or password is invalid!\n\n";
 			}
 		}
 		else if (input == "exit")
@@ -59,7 +59,7 @@ bool isUsernameValid(const std::string& username, const std::string& password)
 
 	if (!fileUsers.is_open())
 	{
-		std::cout << "The file where users are stored could not be opened!";
+		std::cout << "The user database could not be opened!";
 		return false;
 	}
 
