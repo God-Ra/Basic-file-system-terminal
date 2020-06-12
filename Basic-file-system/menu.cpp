@@ -5,7 +5,8 @@ void mainMenu(const std::string& username)
 	std::string input;
 	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
 
-	while (1)
+	bool running = true;
+	while (running)
 	{
 		std::cout << username << ">>";
 		std::getline(std::cin, input);
@@ -21,6 +22,6 @@ void mainMenu(const std::string& username)
 		delete command;
 
 		if (returnFromMain)
-			return;
+			running = false;
 	}
 }
