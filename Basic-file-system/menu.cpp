@@ -5,6 +5,16 @@ void mainMenu(const std::string& username)
 	std::string input;
 	std::filesystem::path currentLocation = "C:\\oosproject\\users\\" + username;
 
+	if (!std::filesystem::exists(currentLocation))
+	{
+		bool directoriesCreated = std::filesystem::create_directories(currentLocation);
+		if (!directoriesCreated)
+		{
+			std::cout << "There was an error with setting up the filesystem!\n\n";
+			return;
+		}
+	}
+
 	bool running = true;
 	while (running)
 	{
