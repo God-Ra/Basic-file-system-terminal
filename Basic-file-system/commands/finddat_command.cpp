@@ -71,7 +71,7 @@ void FindDatCommand::searchDirectory()
 		i != std::filesystem::recursive_directory_iterator();
 		++i)
 	{
-		if (extractFileName((*i).path()) == fileName)
+		if (!std::filesystem::is_directory((*i).path()) && extractFileName((*i).path()) == fileName)
 		{
 			std::cout << (*i).path() << "\n";
 			++matches;
